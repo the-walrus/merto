@@ -1,22 +1,34 @@
 var map;
 
 function initialize() {
-    geocoder = new google.maps.Geocoder();
+    var center = {
+        "lat": 45.752289,
+        "lng": 37.60866299999998
+    };
 
-    var latlng = new google.maps.LatLng(55.5, 38);
+    var metroCenter = {
+        "lat": 55.752289,
+        "lng": 37.60866299999998
+    };
+
     var mapOptions = {
         zoom: 8,
-        center: latlng
+        center: new google.maps.LatLng(55.5, 38)
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+    var latDelta = metroCenter.lat - center.lat;
+    var lngDelta = metroCenter.lng - center.lng;
+
 
     allStations.forEach(function (value) {
-
         var flightPlanCoordinates = [];
 
         value['stations'].forEach(function (value) {
-            flightPlanCoordinates.push(new google.maps.LatLng(value.lat, value.lng));
+            flightPlanCoordinates.push(new google.maps.LatLng(
+                value.lat + latDelta,
+                value.lng + lngDelta
+            ));
         });
 
         var flightPath = new google.maps.Polyline({
@@ -27,22 +39,6 @@ function initialize() {
             strokeWeight: 5
         });
         flightPath.setMap(map);
-    });
-}
-var geocoder;
-
-function codeAddress(fullAddress, address) {
-    geocoder.geocode({ 'address': fullAddress}, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            z = {
-                name: address,
-                lat: results[0].geometry.location.lat(),
-                lng: results[0].geometry.location.lng()
-            };
-            console.log(JSON.stringify(z));
-        } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-        }
     });
 }
 
