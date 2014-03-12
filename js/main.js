@@ -1,6 +1,8 @@
 var map;
 
 function initialize() {
+    geocoder = new google.maps.Geocoder();
+
     var latlng = new google.maps.LatLng(55.5, 38);
     var mapOptions = {
         zoom: 8,
@@ -27,16 +29,17 @@ function initialize() {
         flightPath.setMap(map);
     });
 }
+var geocoder;
 
 function codeAddress(fullAddress, address) {
     geocoder.geocode({ 'address': fullAddress}, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-            metroCoordinates.push ({
+            z = {
                 name: address,
                 lat: results[0].geometry.location.lat(),
                 lng: results[0].geometry.location.lng()
-            });
-            console.log(JSON.stringify(metroCoordinates));
+            };
+            console.log(JSON.stringify(z));
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
