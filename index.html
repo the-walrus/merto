@@ -10,6 +10,16 @@
             margin: 0;
             padding: 0;
         }
+        #panel {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            margin-left: -180px;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+        }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/main.js"></script>
@@ -20,6 +30,10 @@
     </script>
 </head>
 <body>
+<div id="panel">
+    <input id="address" type="textbox" value="Тольятти">
+    <input type="button" value="Geocode" onclick="codeAddress()">
+</div>
 <div id="map-canvas"></div>
 </body>
 </html>
